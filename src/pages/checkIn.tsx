@@ -27,7 +27,7 @@ const CheckIn = () => {
         );
         console.log(res)
         alert(`You have been checked in to event: ${event}`)
-        navigate(`/checkIn/completed/${event}`)
+        navigate(`/event/${event}`)
     }
     async function fetchEvent(): Promise<void> {
         const res: AxiosResponse<any, any> = await axios.get(
