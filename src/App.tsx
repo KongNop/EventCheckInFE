@@ -14,13 +14,20 @@ function App() {
                 justifyContent: "center",
                 minWidth: 290,
                 height: "100vh",
-                alignItems: "center",
+          alignItems: "center",
+                mb: 5
             }}
         >
             <div className="App">
-                <Container maxWidth="md" sx={{ my: 5, bgcolor: "white", p: 1 }}>
+                <Container
+                    maxWidth="md"
+                    sx={{ my: 5, bgcolor: "white", p: 1, px: 3 }}
+                >
                     <Typography align="center" variant="h3">
-                        Welcome To Event CheckIn Application
+                        QR CODE Event CheckIn Application
+                    </Typography>
+                    <Typography align="center" paragraph sx={{ my: 2, color: 'red',  }}>
+                        *DISCLAIMER* <br /> This application is using for demo purpose only
                     </Typography>
                     <Typography align="left" paragraph sx={{ my: 2 }}>
                         This application is used for Credera Festive Hackathon

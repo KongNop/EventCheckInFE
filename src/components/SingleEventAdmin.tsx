@@ -23,10 +23,20 @@ import PendingIcon from "@mui/icons-material/Pending";
 import axios, { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import QRCode from "react-qr-code";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const SingleEventAdmin = () => {
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
+    const [openQR, setOpenQR] = useState(false);
+    const handleQROpen = () => {
+        setOpenQR(true);
+    };
+    const handleQRClose = () => {
+        setOpenQR(false);
+    };
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -51,7 +61,7 @@ const SingleEventAdmin = () => {
     }
 
     async function deleteEvent(): Promise<void> {
-        handleClose()
+        handleClose();
         setLoading(true);
         const res: AxiosResponse<any, any> = await axios.delete(
             `https://1ay74hu2ik.execute-api.us-east-1.amazonaws.com/default/events/${event}`
@@ -133,7 +143,7 @@ const SingleEventAdmin = () => {
                             backgroundColor: "#e9e9e9c6",
                             mb: 2,
                             py: 1,
-                            borderRadius: 2
+                            borderRadius: 2,
                         }}
                     >
                         <Typography
@@ -141,7 +151,7 @@ const SingleEventAdmin = () => {
                             sx={{
                                 mx: 2,
                                 my: 2,
-                                whiteSpace: "pre-line"
+                                whiteSpace: "pre-line",
                             }}
                             // variant="h6"
                             component="div"
@@ -149,6 +159,17 @@ const SingleEventAdmin = () => {
                             {eventDetail.description}
                         </Typography>
                     </Container>
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        size="small"
+                        sx={{ mb: 2, bgcolor: "#fc9745", boxShadow: "none" }}
+                        onClick={() => {
+                            handleQROpen();
+                        }}
+                    >
+                        View QR
+                    </Button>
                     <Demo>
                         <Box
                             sx={{
@@ -189,7 +210,12 @@ const SingleEventAdmin = () => {
                     <Box sx={{ display: "flex", justifyContent: "center" }}>
                         <Button
                             variant="contained"
-                            sx={{ m: 2, bgcolor: "green" }}
+                            sx={{
+                                m: 2,
+                                bgcolor: "#FFFCE8",
+                                color: "black",
+                                boxShadow: "none",
+                            }}
                             onClick={() => {
                                 navigate("/admin");
                             }}
@@ -205,7 +231,7 @@ const SingleEventAdmin = () => {
                                 handleClickOpen();
                             }}
                         >
-                            Delete Event
+                            <DeleteIcon />
                         </Button>
                     </Box>
                 </Grid>
@@ -234,6 +260,46 @@ const SingleEventAdmin = () => {
                     >
                         Delete
                     </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={openQR}
+                onClose={handleQRClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Your Event QR Code"}
+                </DialogTitle>
+                <DialogContent>
+                    <QRCode
+                        size={256}
+                        style={{
+                            height: "auto",
+                            maxWidth: "100%",
+                            width: "100%",
+                        }}
+                        value={`http://localhost:3000/checkIn/${event}`}
+                        viewBox={`0 0 256 256`}
+                    />
+
+                    <DialogContentText align="center" sx={{ mt: 1 }}>
+                        Copy Link to Clipboard
+                        {/* <Box sx={{ display: "inline", ml: 1, mt: 1 }}> */}
+                        <IconButton
+                            onClick={() => {
+                                navigator.clipboard.writeText(
+                                    `http://localhost:3000/checkIn/${event}`
+                                );
+                            }}
+                        >
+                            <ContentCopyIcon sx={{ mr: 1 }} />
+                        </IconButton>
+                        {/* </Box> */}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleQRClose}>Close</Button>
                 </DialogActions>
             </Dialog>
         </>

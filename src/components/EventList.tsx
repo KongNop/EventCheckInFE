@@ -32,6 +32,17 @@ const EventList = () => {
         setEvents(res.data.Items);
         setLoading(false);
     }
+    function compare(a: any, b: any) {
+        if (a.eventDate < b.eventDate) {
+            return -1;
+        }
+        if (a.eventDate > b.eventDate) {
+            return 1;
+        }
+        return 0;
+    }
+
+    events.sort(compare);
     useEffect(() => {
         setLoading(true);
         fetchAllEvents();
