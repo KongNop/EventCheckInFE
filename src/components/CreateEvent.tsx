@@ -85,7 +85,6 @@ const CreateEvent = () => {
                             onChange={(e) => {
                                 setEventName(e.target.value);
                             }}
-                            autoFocus
                         />
                         <TextField
                             margin="normal"

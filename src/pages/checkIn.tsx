@@ -7,55 +7,63 @@ import Select, { ActionMeta } from "react-select";
 
 const CheckIn = () => {
     const [loading, setLoading] = useState(true);
-    const [eventDetail, setEventDetail] = useState({ eventName: '', eventDate: '', description: '', users: [{ name: '', status: false }] });
-    const [users, setUsers] = useState(eventDetail.users)
-    const [targetUser, setUser] = useState('')
+    const [eventDetail, setEventDetail] = useState({
+        eventName: "",
+        eventDate: "",
+        description: "",
+        users: [{ name: "", status: false }],
+    });
+    const [users, setUsers] = useState(eventDetail.users);
+    const [targetUser, setUser] = useState("");
     const { event } = useParams();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     async function handleChangeUser() {
-        console.log(targetUser)
-        let newUserList: any[] = []
+        console.log(targetUser);
+        let newUserList: any[] = [];
         users.map((user) => {
             if (user.name == targetUser) {
-                console.log('matched')
-                user.status = true
+                console.log("matched");
+                user.status = true;
             }
-            newUserList.push(user)
-        })
-        console.log(newUserList)
+            newUserList.push(user);
+        });
+        console.log(newUserList);
         const res: AxiosResponse<any, any> = await axios.patch(
-            `https://1ay74hu2ik.execute-api.us-east-1.amazonaws.com/default/checkIn/${event}`, {updatedUsers: newUserList}
+            `https://1ay74hu2ik.execute-api.us-east-1.amazonaws.com/default/checkIn/${event}`,
+            { updatedUsers: newUserList }
         );
-        console.log(res)
-        alert(`You have been checked in to event: ${event}`)
-        navigate(`/event/${event}`)
+        console.log(res);
+        alert(`You have been checked in to event: ${event}`);
+        navigate(`/event/${event}`);
     }
     async function fetchEvent(): Promise<void> {
         const res: AxiosResponse<any, any> = await axios.get(
             `https://1ay74hu2ik.execute-api.us-east-1.amazonaws.com/default/checkIn/${event}`
         );
         console.log(res.data);
-        setEventDetail(res.data.Item)
-        setUsers(res.data.Item.users)
-        setLoading(false)
+        setEventDetail(res.data.Item);
+        setUsers(res.data.Item.users);
+        setLoading(false);
     }
     useEffect(() => {
-        fetchEvent()
+        fetchEvent();
     }, []);
 
     if (event === undefined) {
-        console.log('HIhi')
+        console.log("HIhi");
         return (
             <>
                 <h1>Oops, something is wrong</h1>
             </>
-        )
+        );
     }
-    const uncheckedUser = users.filter((user) => { return user.status === false })
-    let userOptions: any[] = []
+    const uncheckedUser = users.filter((user) => {
+        return user.status === false;
+    });
+    let userOptions: any[] = [];
     uncheckedUser.forEach((user) => {
         userOptions.push({ value: user.name, label: user.name });
-    })
+    });
     if (loading) {
         return (
             <>
@@ -74,8 +82,7 @@ const CheckIn = () => {
                 </Box>
             </>
         );
-    }
-    else {
+    } else {
         return (
             <>
                 <div
@@ -118,25 +125,36 @@ const CheckIn = () => {
                     }}
                 >
                     <Grid item xs={12} md={12}>
-                        <Typography
-                            align="left"
+                        <Container
+                            maxWidth="sm"
                             sx={{
-                                mt: 4,
+                                backgroundColor: "#ffffffe9",
                                 mb: 2,
-                                whiteSpace: "pre-line",
-                                color: "white",
+                                py: 1,
+                                borderRadius: 2,
                             }}
-                            variant="h6"
-                            component="div"
                         >
-                            {eventDetail.description}
-                        </Typography>
+                            <Typography
+                                align="left"
+                                sx={{
+                                    mt: 2,
+                                    mb: 2,
+                                    whiteSpace: "pre-line",
+                                    color: "black",
+                                }}
+                                variant="h6"
+                                component="div"
+                            >
+                                {eventDetail.description}
+                            </Typography>
+                        </Container>
                     </Grid>
                 </Box>
 
                 <Container
                     component="main"
-                    sx={{ backgroundColor: "white", padding: 3 }}
+                    maxWidth="md"
+                    sx={{ backgroundColor: "white", padding: 3, mb: 5 }}
                 >
                     <h3>Find your name here</h3>
                     <Select
