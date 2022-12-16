@@ -139,7 +139,7 @@ const EventCard = ({ event }: { event: any }) => {
                 <Button
                     size="small"
                     onClick={() => {
-                        navigate(`/event/${event.eventName}`);
+                        navigate(`/admin/event/${event.eventName}`);
                     }}
                 >
                     View Event

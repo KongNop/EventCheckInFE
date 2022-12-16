@@ -8,6 +8,7 @@ import CheckIn from './pages/checkIn';
 import CompleteCheckIn from './pages/others/completeCheckIn';
 import SingleEvent from './components/SingleEvent';
 import Footer from './components/Footer';
+import SingleEventAdmin from './components/SingleEventAdmin';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,7 +16,9 @@ const root = ReactDOM.createRoot(
 root.render(
     <BrowserRouter>
         <Routes>
+            <Route path="/" element={<App />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/event/:event" element={<SingleEventAdmin />} />
             <Route path="/event/:event" element={<SingleEvent />} />
             <Route path="/checkIn/:event" element={<CheckIn />} />
             <Route
@@ -23,6 +26,5 @@ root.render(
                 element={<CompleteCheckIn />}
             />
         </Routes>
-
     </BrowserRouter>
 );

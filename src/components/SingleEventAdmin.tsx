@@ -4,6 +4,11 @@ import {
     Button,
     CircularProgress,
     Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
     Grid,
     IconButton,
     List,
@@ -19,8 +24,16 @@ import axios, { AxiosResponse } from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-const SingleEvent = () => {
+const SingleEventAdmin = () => {
     const navigate = useNavigate();
+    const [open, setOpen] = useState(false);
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
     const [loading, setLoading] = useState(false);
     const [eventDetail, setEventDetail] = useState({
         eventName: "",
@@ -35,6 +48,17 @@ const SingleEvent = () => {
         );
         setEventDetail(res.data.Item);
         setLoading(false);
+    }
+
+    async function deleteEvent(): Promise<void> {
+        handleClose()
+        setLoading(true);
+        const res: AxiosResponse<any, any> = await axios.delete(
+            `https://1ay74hu2ik.execute-api.us-east-1.amazonaws.com/default/events/${event}`
+        );
+        setLoading(false);
+        alert("Successfully Delete the event");
+        navigate("/admin");
     }
     useEffect(() => {
         setLoading(true);
@@ -100,7 +124,6 @@ const SingleEvent = () => {
                     display: "flex",
                     justifyContent: "center",
                     minWidth: 290,
-                    mb: 5,
                 }}
             >
                 <Grid item xs={12} md={12}>
@@ -110,7 +133,7 @@ const SingleEvent = () => {
                             backgroundColor: "#e9e9e9c6",
                             mb: 2,
                             py: 1,
-                            borderRadius: 2,
+                            borderRadius: 2
                         }}
                     >
                         <Typography
@@ -118,7 +141,7 @@ const SingleEvent = () => {
                             sx={{
                                 mx: 2,
                                 my: 2,
-                                whiteSpace: "pre-line",
+                                whiteSpace: "pre-line"
                             }}
                             // variant="h6"
                             component="div"
@@ -163,10 +186,58 @@ const SingleEvent = () => {
                             </List>
                         </Box>
                     </Demo>
+                    <Box sx={{ display: "flex", justifyContent: "center" }}>
+                        <Button
+                            variant="contained"
+                            sx={{ m: 2, bgcolor: "green" }}
+                            onClick={() => {
+                                navigate("/admin");
+                            }}
+                        >
+                            Back
+                        </Button>
+                        <Button
+                            variant="contained"
+                            size="small"
+                            color="error"
+                            sx={{ m: 2 }}
+                            onClick={() => {
+                                handleClickOpen();
+                            }}
+                        >
+                            Delete Event
+                        </Button>
+                    </Box>
                 </Grid>
             </Box>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Are you sure you want to delete the event"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        All the event's data will be deleted from the system
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button
+                        onClick={() => {
+                            deleteEvent();
+                        }}
+                        autoFocus
+                    >
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </>
     );
 };
 
-export default SingleEvent;
+export default SingleEventAdmin;
