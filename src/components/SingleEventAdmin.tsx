@@ -140,7 +140,7 @@ const SingleEventAdmin = () => {
                     <Container
                         maxWidth="sm"
                         sx={{
-                            backgroundColor: "#e9e9e9c6",
+                            backgroundColor: "#ffffffe9",
                             mb: 2,
                             py: 1,
                             borderRadius: 2,
@@ -163,7 +163,7 @@ const SingleEventAdmin = () => {
                         fullWidth
                         variant="contained"
                         size="small"
-                        sx={{ mb: 2, bgcolor: "#fc9745", boxShadow: "none" }}
+                        sx={{ mb: 2, bgcolor: "#f87d64", boxShadow: "none" }}
                         onClick={() => {
                             handleQROpen();
                         }}

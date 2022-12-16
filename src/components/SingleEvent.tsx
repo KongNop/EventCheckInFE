@@ -107,7 +107,7 @@ const SingleEvent = () => {
                     <Container
                         maxWidth="sm"
                         sx={{
-                            backgroundColor: "#e9e9e9c6",
+                            backgroundColor: "#ffffffe9",
                             mb: 2,
                             py: 1,
                             borderRadius: 2,
