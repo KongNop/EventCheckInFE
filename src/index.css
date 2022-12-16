@@ -7,9 +7,9 @@ body {
     background: repeating-linear-gradient(
   43deg,
   #ffffff,
-  #ffffff 5px,
-  #ffa552 5px,
-  #ffa552 100px
+  #ffffff 7px,
+  #ff9a34 7px,
+  #ff9a34 180px
 );
     
     animation: gradient 15s ease infinite;
