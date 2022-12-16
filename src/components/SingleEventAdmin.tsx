@@ -279,7 +279,7 @@ const SingleEventAdmin = () => {
                             maxWidth: "100%",
                             width: "100%",
                         }}
-                        value={`http://localhost:3000/checkIn/${event}`}
+                        value={`https://main.db7fod2wd8mky.amplifyapp.com/checkIn/${event}`}
                         viewBox={`0 0 256 256`}
                     />
 
@@ -289,13 +289,12 @@ const SingleEventAdmin = () => {
                         <IconButton
                             onClick={() => {
                                 navigator.clipboard.writeText(
-                                    `http://localhost:3000/checkIn/${event}`
+                                    `https://main.db7fod2wd8mky.amplifyapp.com/checkIn/${event}`
                                 );
                             }}
                         >
                             <ContentCopyIcon sx={{ mr: 1 }} />
                         </IconButton>
-                        {/* </Box> */}
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
