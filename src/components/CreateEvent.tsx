@@ -1,11 +1,13 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateEvent = () => {
     const [eventName, setEventName] = useState("");
     const [eventDate, setEventDate] = useState("");
     const [description, setDescription] = useState("");
+    const navigate = useNavigate()
     const [users, setUsers] = useState([{ name: "", status: false }]);
     const [remove, setRemove] = useState(false);
     const [user, setUser] = useState("");
@@ -20,7 +22,7 @@ const CreateEvent = () => {
             }
         );
         console.log(res);
-        window.location.reload();
+        navigate(`/admin/event/${eventName}`)
     }
     function handleAddPeople(event: any) {
         event.preventDefault();
@@ -39,6 +41,7 @@ const CreateEvent = () => {
         console.log(userList);
         setUsers(userList);
     }
+
     useEffect(() => {
         setUsers([]);
     }, []);
@@ -53,7 +56,7 @@ const CreateEvent = () => {
                     paddingBottom: 5,
                     borderTopRightRadius: 100,
                     borderTopLeftRadius: 5,
-                    pb: 10,
+                    pb: 5,
                     mt: 5,
                     boxShadow:
                         "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
@@ -138,7 +141,7 @@ const CreateEvent = () => {
                         <h4>Current Participants:</h4>
                         {users.length === 0 ? (
                             <Typography align="center" component="div">
-                                none
+                                - none -
                             </Typography>
                         ) : (
                             ""
@@ -169,7 +172,7 @@ const CreateEvent = () => {
                             fullWidth
                             variant="contained"
                             onClick={handleCreateEvent}
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{ mt: 3, mb: 5 }}
                             disabled={
                                 eventDate == "" ||
                                 eventName == "" ||

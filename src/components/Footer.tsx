@@ -4,18 +4,8 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <footer>
-            <Container
-                sx={{
-                    width: "100%",
-                    //   height: "60px",
-                    bgcolor: "#777777",
-                    padding: 2,
-                    paddingX: 8,
-                    // position: "fixed",
-                    // bottom: 0,
-                }}
-            >
+        <footer
+        style={{ width: '100vw', backgroundColor: 'gray', bottom: 0, position: 'absolute', padding: 10}}>
                 <Typography
                     sx={{ color: "white" }}
                     gutterBottom
@@ -31,7 +21,6 @@ const Footer = () => {
                 >
                     Kong Nopwattanapong
                 </Typography>
-            </Container>
         </footer>
     );
 }
